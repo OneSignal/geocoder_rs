@@ -11,6 +11,11 @@ extern crate serde_derive;
 #[macro_use]
 extern crate lazy_static;
 
+#[macro_use]
+extern crate ruru;
+
+use ruru::{AnyObject, Class, Float, NilClass, Object, RString};
+
 use geo::prelude::*;
 pub use geo::Point;
 
@@ -21,6 +26,29 @@ pub static PROCESSED_JSON: &str = include_str!(concat!(env!("OUT_DIR"), "/countr
 
 lazy_static! {
     pub static ref COUNTRIES: Vec<Country> = { serde_json::from_str(PROCESSED_JSON).unwrap() };
+}
+
+class!(Geocoder);
+
+methods!(
+    Geocoder,
+    _itself,
+    fn find_country_rb(x: Float, y: Float) -> AnyObject {
+        match (x, y) {
+            (Ok(x), Ok(y)) => match find_country(&Point::new(x.to_f64(), y.to_f64())) {
+                Some(country_code) => RString::new(country_code).value().into(),
+                None => NilClass::new().value().into(),
+            },
+            _ => NilClass::new().value().into(),
+        }
+    }
+);
+
+#[no_mangle]
+pub extern "C" fn init_rusty_blank() {
+    Class::new("Geocoder", None).define(|itself| {
+        itself.def("find_country", find_country_rb);
+    });
 }
 
 pub fn find_country(coord: &Point<f64>) -> Option<&str> {

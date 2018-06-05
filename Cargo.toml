@@ -31,8 +31,8 @@ rayon = "1.0.1"
 name = "benchmark"
 harness = false
 
-[profile.release]
-debug = true
-
 [profile.bench]
 debug = true
+
+[package.metadata.thermite]
+github_releases = true

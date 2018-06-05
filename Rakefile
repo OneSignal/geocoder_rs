@@ -7,7 +7,7 @@ task default: %w(thermite:build)
 
 desc 'Run testsuite'
 task test: %w(thermite:build thermite:test) do
-  test_file = File.join(File.dirname(__FILE__), 'test', 'test_rusty_blank.rb')
+  test_file = File.join(File.dirname(__FILE__), 'test', 'test_geocoder.rb')
   ruby test_file, thermite.config.ruby_extension_path
   ruby '-I', File.dirname(thermite.config.ruby_extension_path), test_file
 end

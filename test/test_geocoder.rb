@@ -7,6 +7,7 @@ require 'minitest/autorun'
 #
 class TestGeocoder < MiniTest::Test
   def test_geocoder
+    load_library
     assert Geocoder.find_country(-122.3164206, 37.5506619), "US"
   end
 
@@ -19,7 +20,7 @@ class TestGeocoder < MiniTest::Test
       func.call
     else
       puts "Requiring geocoder on Ruby #{RbConfig::CONFIG['ruby_version']}"
-      require 'geocoder'
+      require 'geocoder_rs'
     end
   end
 end

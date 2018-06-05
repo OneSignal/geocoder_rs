@@ -2,6 +2,7 @@
 name = "geocoder_rs"
 version = "1.0.0"
 authors = ["Josh Leverette"]
+repository = "https://github.com/Hiptic/geocoder_rs"
 
 [dependencies]
 geo = { version = "0.9.1", features = ["use-serde"] }

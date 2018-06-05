@@ -45,9 +45,9 @@ methods!(
 );
 
 #[no_mangle]
-pub extern "C" fn init_rusty_blank() {
+pub extern "C" fn init_geocoder() {
     Class::new("Geocoder", None).define(|itself| {
-        itself.def("find_country", find_country_rb);
+        itself.def_self("find_country", find_country_rb);
     });
 }
 

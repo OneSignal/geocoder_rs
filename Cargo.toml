@@ -1,6 +1,6 @@
 [package]
-name = "geocoder"
-version = "0.1.0"
+name = "geocoder_rs"
+version = "1.0.0"
 authors = ["Josh Leverette"]
 
 [dependencies]

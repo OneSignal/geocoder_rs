@@ -18,7 +18,7 @@ ruru = "0.9.3"
 criterion = "0.2.3"
 
 [lib]
-crate-type = ["cdylib"]
+crate-type = ["cdylib", "lib"]
 
 [build-dependencies]
 geo = { version = "0.9.1", features = ["use-serde"] }

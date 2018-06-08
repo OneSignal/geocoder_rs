@@ -13,8 +13,7 @@ to create a release tarball for upload to GitHub:
 
 to run the tests:
 
-    rake thermite:test # runs the Rust tests
-    ruby test/test_geocoder.rb # if the gem has been installed locally
+    rake test # runs the Rust tests and Ruby tests
 
 ## releasing
 

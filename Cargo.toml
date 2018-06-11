@@ -37,3 +37,7 @@ debug = true
 
 [package.metadata.thermite]
 github_releases = true
+
+# this is necessary to support static linkage for now
+[patch.crates-io]
+ruby-sys = { git = "http://github.com/coder543/ruby-sys" }

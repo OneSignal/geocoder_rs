@@ -9,7 +9,7 @@ to install locally:
 
 to create a release tarball for upload to GitHub:
 
-    rake thermite:tarball
+    RUBY_STATIC=1 rake thermite:tarball
 
 to run the tests:
 

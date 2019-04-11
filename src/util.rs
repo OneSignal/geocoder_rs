@@ -2,7 +2,6 @@ use std::sync::Mutex;
 
 use geo::map_coords::MapCoordsInplace;
 use geo::prelude::*;
-use geo::simplifyvw::SimplifyVWPreserve;
 use geo::{Bbox, Closest, MultiPolygon, Point, Polygon};
 
 use geojson::{conversion::TryInto, GeoJson, Value};
@@ -15,6 +14,28 @@ pub struct Country {
     pub geometry: MultiPolygon<f64>,
     pub fast_geometry: MultiPolygon<f64>,
     pub bbox: Bbox<f64>,
+
+    #[serde(skip_serializing, skip_deserializing, default)]
+    bboxes: Option<Vec<Bbox<f64>>>,
+}
+
+impl Country {
+    pub fn initialize(&mut self) {
+        let mut bboxes = vec![];
+        for polygon in self.geometry.clone().into_iter() {
+            if let Some(bbox) = polygon.bbox() {
+                bboxes.push(bbox);
+            }
+        }
+        self.bboxes = Some(bboxes);
+    }
+
+    pub fn in_bboxes(&self, p: &Point<f64>) -> bool {
+        if let Some(ref bboxes) = self.bboxes {
+            return bboxes.iter().any(|b| b.contains(p));
+        }
+        return false;
+    }
 }
 
 pub fn coord_count(poly: &MultiPolygon<f64>) -> u64 {
@@ -137,6 +158,7 @@ pub fn parse_from_source(source: &str) -> Vec<Country> {
                     geometry,
                     fast_geometry,
                     bbox,
+                    bboxes: None,
                 }
             })
             .collect(),
